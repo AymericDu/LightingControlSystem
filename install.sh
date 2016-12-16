@@ -25,7 +25,9 @@ cd rflpc/; make; cd ..
 echo "Téléchargement de Smews..."
 git clone https://github.com/2xs/smews.git
 echo "Pré-compilation de Smews..."
-cd smews; ./targets/mbed_ethernet/summon-rflpc
+cd smews
+sed -i "s/#endif/#define RFLPC_CONFIG_ENABLE_ADC\n#endif/g" targets/mbed_ethernet/rflpc-config-file/config-options.h
+./targets/mbed_ethernet/summon-rflpc
 
 ## Préparation d'une interface
 if [ -z $1 ]
