@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="lighting control system">
+    <meta name="author" content="Aymeric Ducroquetz, Alexandre Bécart">
+
+    <title>LightingControlSystem</title>
+
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap_toggle.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#responsive-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">LightingControlSystem</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="responsive-navbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Lumière blanche</a></li>
+            <li><a href="#">Couleurs</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="col-xs-12 col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Allumage</h3>
+          </div>
+          <div class="panel-body">
+            <input id="switch-led" data-toggle="toggle" data-size="large" data-onstyle="success" data-offstyle="danger" type="checkbox">
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Luminosité</h3>
+          </div>
+          <div class="panel-body">
+            <div id="four-digits">
+              <div class="digit">0</div>
+              <div class="digit">0</div>
+              <div class="digit">0</div>
+              <div class="digit">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-md-8">
+
+      </div>
+    </div>
+
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="bootstrap_toggle.min.js"></script>
+
+  </body>
+</html>

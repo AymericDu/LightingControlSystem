@@ -9,7 +9,9 @@ compile:
 	cp -R light_sensor/ ~/cross-compiler/smews/apps/
 	rm -rf ~/cross-compiler/smews/apps/luminosity/
 	cp -R luminosity/ ~/cross-compiler/smews/apps/
-	cd ~/cross-compiler/smews/; scons target=mbed_ethernet ipaddr=192.168.0.4 apps=:light,:light_sensor,:luminosity,lib
+	rm -rf ~/cross-compiler/smews/apps/lighting_control_system/
+	cp -R lighting_control_system/ ~/cross-compiler/smews/apps/
+	cd ~/cross-compiler/smews/; scons target=mbed_ethernet ipaddr=192.168.0.4 apps=:light,:light_sensor,:luminosity,:lighting_control_system,lib
 
 program: compile
 	rm $(MBED_PATH)/*.bin

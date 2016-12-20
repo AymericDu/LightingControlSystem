@@ -1,0 +1,27 @@
+body {
+  margin-top: 70px;
+  background-color: #7F7F7F;
+}
+
+@font-face {
+  font-family: 'Segment7Standard';
+      src: url('Segment7Standard.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+#four-digits {
+  display: inline-block;
+  background-color: black;
+  padding: 10px 10px 0px 10px;
+}
+
+#four-digits .digit {
+  display: inline;
+  color: red;
+  width: 40px;
+  height: 60px;
+  font-size: 60px;
+  font-family: 'Segment7Standard';
+  line-height: 1 !important;
+}
