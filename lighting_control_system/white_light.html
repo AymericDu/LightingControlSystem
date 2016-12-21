@@ -11,6 +11,7 @@
 
     <link href="bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap_toggle.min.css" rel="stylesheet">
+    <link href="bootstrap_slider.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
   </head>
 
@@ -38,10 +39,10 @@
     </nav>
 
     <div class="container">
-      <div class="col-xs-12 col-md-4">
+      <div class="col-xs-12 col-sm-4">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">Allumage</h3>
+            <h3 class="panel-title">Interrupteur</h3>
           </div>
           <div class="panel-body">
             <input id="switch-led" data-toggle="toggle" data-size="large" data-onstyle="success" data-offstyle="danger" type="checkbox">
@@ -63,14 +64,52 @@
         </div>
       </div>
 
-      <div class="col-xs-12 col-md-8">
+      <div class="col-xs-12 col-sm-8">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Régler l'intensité</h3>
+          </div>
+          <div class="panel-body">
+            <div class="col-xs-12 col-md-6">
+              <input id="intensity-slider" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="0"/>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div>
+                Intensité : <span id="intensity-value">???</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button type="button" class="btn btn-success">Valider</button>
+          </div>
+        </div>
 
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Régler la luminosité</h3>
+          </div>
+          <div class="panel-body">
+            <div class="col-xs-12 col-md-6">
+              <input id="luminosity-slider" type="text" data-slider-min="0" data-slider-max="4095" data-slider-step="10" data-slider-value="0"/>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div>
+                Luminosité : <span id="luminosity-value">???</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button type="button" class="btn btn-success">Valider</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <script src="jquery.min.js"></script>
     <script src="bootstrap.min.js"></script>
     <script src="bootstrap_toggle.min.js"></script>
+    <script src="bootstrap_slider.min.js"></script>
+    <script src="white_light.js"></script>
 
   </body>
 </html>
