@@ -14,5 +14,5 @@ compile:
 	cd ~/cross-compiler/smews/; scons target=mbed_ethernet ipaddr=192.168.0.4 apps=:light,:light_sensor,:luminosity,:lighting_control_system,lib
 
 program: compile
-	rm $(MBED_PATH)/*.bin
+	rm -f $(MBED_PATH)/*.bin
 	cp ~/cross-compiler/smews/bin/mbed_ethernet/smews.bin $(MBED_PATH) && sync

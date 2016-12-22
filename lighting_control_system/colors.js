@@ -7,14 +7,12 @@ $("#color-picker").colorpicker({
     },
     hue: {
       maxTop: 200
-    },
-    alpha: {
-      maxTop: 200
     }
   },
   color: "#000000",
   container: true,
-  inline: true
+  inline: true,
+  format: "hex"
 });
 
 function ajax_color () {
