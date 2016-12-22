@@ -26,6 +26,11 @@ body {
   line-height: 1 !important;
 }
 
+#color {
+  background-color: #000000;
+  height: 60px;
+}
+
 .colorpicker-2x .colorpicker-saturation {
   width: 200px;
   height: 200px;
