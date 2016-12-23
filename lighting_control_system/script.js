@@ -42,6 +42,10 @@ function change_color (r, g, b) {
   $("#color").css("background-color","rgb("+r+","+g+","+b+")");
 }
 
+function change_intensity (r, g, b) {
+  $("#intensity").text(((r + g + b) / 3).toFixed(2));
+}
+
 function ajax_get_light () {
   $.ajax({
       url: "../light",
@@ -55,6 +59,7 @@ function ajax_get_light () {
       var b = parseInt(rgb[2]);
       change_interrupt(r,g,b);
       change_color(r,g,b);
+      change_intensity(r,g,b);
     })
     .fail(function() {
       $('#error').fadeIn().delay(10000).fadeOut();
