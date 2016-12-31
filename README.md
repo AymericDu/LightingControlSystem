@@ -12,10 +12,9 @@ Le système de contrôle de la lumière permet de :
 - contrôler et afficher la luminosité de la pièce
 - contrôler la couleur de la lumière
 
-Le système propose également 3 interfaces :
+Le système propose également 2 interfaces :
 - le site Web
-- la télécommande
-- les boutons sur le tableau de bord
+- le bouton sur le tableau de bord
 
 ## Branchement
 
