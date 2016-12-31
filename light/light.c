@@ -20,7 +20,7 @@
 int led_is_on() {
   uint8_t r, g, b;
   getColorRGB(0, &r, &g, &b);
-  return (r | g | b) != 0;
+  return (r | g | b);
 }
 
 RFLPC_IRQ_HANDLER _button_event(void) {
@@ -37,7 +37,8 @@ static char init_led() {
 
   // Active les interruptions gpio pour le bouton branché sur
   // le port D6 de la base shield (port 2 - pin 3 de lpc1768)
-  rflpc_irq_enable(EINT3_IRQn); // EINT3_IRQn channel partagé avec les interruptions GPIO
+  rflpc_irq_enable(EINT3_IRQn);
+  // EINT3_IRQn channel partagé avec les interruptions GPIO
   rflpc_irq_set_handler(EINT3_IRQn, _button_event);
   LPC_GPIOINT->IO2IntEnR |= (1<<3); // Interruption sur front montant
 
@@ -47,19 +48,15 @@ static char init_led() {
 static char manage_color(struct args_t *args) {
   if (args) {
     setColorRGB(0, args->r, args->g, args->b);
-
     out_uint(args->r);
     out_str("-");
     out_uint(args->g);
     out_str("-");
     out_uint(args->b);
-  } else {
-    uint8_t r;
-    uint8_t g;
-    uint8_t b;
-
+  }
+  else {
+    uint8_t r, g, b;
     getColorRGB(0, &r, &g, &b);
-
     out_uint(r);
     out_str("-");
     out_uint(g);
