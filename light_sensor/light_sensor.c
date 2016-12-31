@@ -38,7 +38,7 @@ static char init_light_sensor() {
   rflpc_timer_set_pre_scale_register(TIMER_4DIGIT, rflpc_clock_get_system_clock());
   rflpc_timer_set_counter(TIMER_4DIGIT, 0);
   rflpc_timer_set_callback(TIMER_4DIGIT, luminosity_on_4digit);
-  rflpc_timer_set_match_value(TIMER_4DIGIT, RFLPC_TIMER_MATCH0, 4);
+  rflpc_timer_set_match_value(TIMER_4DIGIT, RFLPC_TIMER_MATCH0, 1);
   rflpc_timer_set_irq_on_match(TIMER_4DIGIT, RFLPC_TIMER_MATCH0, RFLPC_TIMER_IRQ_ON_MATCH | RFLPC_TIMER_RESET_ON_MATCH);
   rflpc_timer_start(TIMER_4DIGIT);
 
