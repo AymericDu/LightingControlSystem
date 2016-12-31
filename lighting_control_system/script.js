@@ -25,15 +25,15 @@ function ajax_interrupt () {
 function change_interrupt (r, g, b) {
   if (r == 0 & g == 0 & b == 0) {
     if ($("#switch-led").prop("checked")) {
-      $("body").off("change", "#switch-led", ajax_interrupt);
+      //$("body").off("change", "#switch-led", ajax_interrupt);
       $("#switch-led").bootstrapToggle("off");
-      $("body").on("change", "#switch-led", ajax_interrupt);
+      //$("body").on("change", "#switch-led", ajax_interrupt);
     }
   } else {
     if (!$("#switch-led").prop("checked")) {
-      $("body").off("change", "#switch-led", ajax_interrupt);
+      //$("body").off("change", "#switch-led", ajax_interrupt);
       $("#switch-led").bootstrapToggle("on");
-      $("body").on("change", "#switch-led", ajax_interrupt);
+      //$("body").on("change", "#switch-led", ajax_interrupt);
     }
   }
 }
@@ -66,5 +66,23 @@ function ajax_get_light () {
     });
 }
 
+function ajax_get_value_light_sensor() {
+  $.ajax({
+    url: "../light_sensor",
+    dataType: "text"
+  })
+  .done(function(msg) {
+    var digits = "0".repeat(4 - msg.length).concat(msg);
+    var children = $("#four-digits").children();
+    for(var i = 0; i < 4 /*children.length*/; i++) {
+      children[i].innerHTML = digits[i];
+    }
+  })
+  .fail(function() {
+    $("#error").fadeIn().delay(10000).fadeOut();
+  });
+}
+
 ajax_get_light();
+setInterval(ajax_get_value_light_sensor, 500);
 $("body").on("change", "#switch-led", ajax_interrupt);
