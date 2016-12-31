@@ -25,15 +25,15 @@ function ajax_interrupt () {
 function change_interrupt (r, g, b) {
   if (r == 0 & g == 0 & b == 0) {
     if ($("#switch-led").prop("checked")) {
-      //$("body").off("change", "#switch-led", ajax_interrupt);
+      $("body").off("change", "#switch-led", ajax_interrupt);
       $("#switch-led").bootstrapToggle("off");
-      //$("body").on("change", "#switch-led", ajax_interrupt);
+      $("body").on("change", "#switch-led", ajax_interrupt);
     }
   } else {
     if (!$("#switch-led").prop("checked")) {
-      //$("body").off("change", "#switch-led", ajax_interrupt);
+      $("body").off("change", "#switch-led", ajax_interrupt);
       $("#switch-led").bootstrapToggle("on");
-      //$("body").on("change", "#switch-led", ajax_interrupt);
+      $("body").on("change", "#switch-led", ajax_interrupt);
     }
   }
 }
@@ -69,7 +69,8 @@ function ajax_get_light () {
 function ajax_get_value_light_sensor() {
   $.ajax({
     url: "../light_sensor",
-    dataType: "text"
+    dataType: "text",
+    timeout: 10000
   })
   .done(function(msg) {
     var digits = "0".repeat(4 - msg.length).concat(msg);
@@ -83,6 +84,27 @@ function ajax_get_value_light_sensor() {
   });
 }
 
+function update_light() {
+  $.ajax({
+    url: "../comet_light",
+    dataType: "text"
+  })
+  .done(function(msg) {
+    var rgb = msg.split("-");
+    var r = parseInt(rgb[0]);
+    var g = parseInt(rgb[1]);
+    var b = parseInt(rgb[2]);
+    change_interrupt(r,g,b);
+    change_color(r,g,b);
+    change_intensity(r,g,b);
+    update_light();
+  })
+  .fail(function() {
+    $('#error').fadeIn().delay(10000).fadeOut();
+  });
+}
+
+$("body").on("change", "#switch-led", ajax_interrupt);
 ajax_get_light();
 setInterval(ajax_get_value_light_sensor, 500);
-$("body").on("change", "#switch-led", ajax_interrupt);
+update_light();

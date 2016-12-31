@@ -11,10 +11,10 @@
 #include "../lib/P9813.h"
 #include "../lib/LM358.h"
 #include <stdint.h>
+#include "channels.h"
 
 static char init_luminosity() {
   /* La LED RGB et le capteur de lumière sont déjà initialisés dans les apps "light" et "light_sensor". */
-
   return 1;
 }
 
@@ -65,5 +65,6 @@ static char set_luminosity(struct args_t *args) {
     out_str("NOT OK");
   }
 
+  server_push(&alertLight);
   return 1;
 }

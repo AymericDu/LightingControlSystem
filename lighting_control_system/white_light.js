@@ -19,8 +19,7 @@ function ajax_luminosity () {
   var luminosity = $("#luminosity-slider").slider("getValue");
 	$.ajax({
       url: "../luminosity?l=" + luminosity,
-      dataType: "text",
-			timeout: 10000
+      dataType: "text"
     })
     .done(function(msg) {
       if (msg != "OK") {

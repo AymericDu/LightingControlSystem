@@ -1,6 +1,6 @@
 /*
 <generator>
-  <handlers init="init_led" doGet="manage_color"/>
+  <handlers init="init_light" doGet="manage_color"/>
 	<properties persistence="volatile" />
 	<args>
 	  <arg name="r" type="uint8" />
@@ -13,9 +13,11 @@
 #include "../lib/P9813.h"
 #include "../lib/connectors.h"
 #include <stdint.h>
+#include "channels.h"
 
 #define LED_TURN_ON() setColorRGB(0, 255, 255, 255)
 #define LED_TURN_OFF() setColorRGB(0, 0, 0, 0)
+
 
 int led_is_on() {
   uint8_t r, g, b;
@@ -28,10 +30,11 @@ RFLPC_IRQ_HANDLER _button_event(void) {
   {
     LPC_GPIOINT->IO2IntClr = (1<<3);
     led_is_on() ? LED_TURN_OFF() : LED_TURN_ON();
+    server_push(&alertLight);
   }
 }
 
-static char init_led() {
+static char init_light() {
   initColorRGB(BASE_SHIELD_D2);
   LED_TURN_OFF();
 
@@ -48,6 +51,7 @@ static char init_led() {
 static char manage_color(struct args_t *args) {
   if (args) {
     setColorRGB(0, args->r, args->g, args->b);
+    server_push(&alertLight);
     out_uint(args->r);
     out_str("-");
     out_uint(args->g);
