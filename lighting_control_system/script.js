@@ -1,3 +1,6 @@
+/*
+ * Envoie une requête sur la MBED pour définir la couleur de la LED.
+ */
 function ajax_light (r, g, b) {
   $.ajax({
       url: "../light?r=" + r + "&g=" + g + "&b=" + b,
@@ -14,6 +17,9 @@ function ajax_light (r, g, b) {
     });
 }
 
+/*
+ * Fonction attachée au bouton de l'interface permettant d'éteindre ou d'allumer la LED.
+ */
 function ajax_interrupt () {
   if ($("#switch-led").prop("checked")) {
     ajax_light(255, 255, 255);
@@ -22,6 +28,9 @@ function ajax_interrupt () {
   }
 }
 
+/*
+ * Met à jour l'état de l'interrupteur en fonction de la couleur de la LED.
+ */
 function change_interrupt (r, g, b) {
   if (r == 0 & g == 0 & b == 0) {
     if ($("#switch-led").prop("checked")) {
@@ -38,14 +47,24 @@ function change_interrupt (r, g, b) {
   }
 }
 
+/*
+ * Change la couleur de la LED dans l'interface web.
+ */
 function change_color (r, g, b) {
   $("#color").css("background-color","rgb("+r+","+g+","+b+")");
 }
 
+/*
+ * Change la valeur de l'intensité dans l'interface web.
+ */
 function change_intensity (r, g, b) {
   $("#intensity").text(((r + g + b) / 3).toFixed(2));
 }
 
+/*
+ * Récupère la couleur de la LED et met à jour l'interrupteur, la couleur et
+ * l'intensité sur l'interface web.
+ */
 function ajax_get_light () {
   $.ajax({
       url: "../light",
@@ -66,6 +85,9 @@ function ajax_get_light () {
     });
 }
 
+/*
+ * Récupère la valeur du capteur de lumière.
+ */
 function ajax_get_value_light_sensor() {
   $.ajax({
     url: "../light_sensor",
@@ -84,7 +106,11 @@ function ajax_get_value_light_sensor() {
   });
 }
 
-function update_light() {
+/*
+ * Met à jour l'interrupteur, la couleur et l'intensité sur l'interface web
+ * lorsqu'il y a un changement d'état.
+ */
+function update_interface() {
   $.ajax({
     url: "../comet_light",
     dataType: "text"
@@ -97,7 +123,7 @@ function update_light() {
     change_interrupt(r,g,b);
     change_color(r,g,b);
     change_intensity(r,g,b);
-    update_light();
+    update_interface();
   })
   .fail(function() {
     $('#error').fadeIn().delay(10000).fadeOut();
@@ -107,4 +133,4 @@ function update_light() {
 $("body").on("change", "#switch-led", ajax_interrupt);
 ajax_get_light();
 setInterval(ajax_get_value_light_sensor, 500);
-update_light();
+update_interface();

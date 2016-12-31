@@ -19,21 +19,31 @@
 #define LED_TURN_OFF() setColorRGB(0, 0, 0, 0)
 
 
+/*
+ * Retourne l'état de la LED
+ */
 int led_is_on() {
   uint8_t r, g, b;
   getColorRGB(0, &r, &g, &b);
   return (r | g | b);
 }
 
+/*
+ * Fonction déclenchée lors d'une interruption GPIO
+ */
 RFLPC_IRQ_HANDLER _button_event(void) {
+  // si l'interruption concerne le pin 3 (port 2) du lpc1768 sur un front montant
   if(LPC_GPIOINT->IO2IntStatR & (1<<3))
   {
     LPC_GPIOINT->IO2IntClr = (1<<3);
-    led_is_on() ? LED_TURN_OFF() : LED_TURN_ON();
-    server_push(&alertLight);
+    led_is_on() ? LED_TURN_OFF() : LED_TURN_ON(); // on change l'état de la LED
+    server_push(&alertLight); // on notifie le changement
   }
 }
 
+/*
+ * Initialise la LED et le bouton qui permet de controler l'allumage de la LED.
+ */
 static char init_light() {
   initColorRGB(BASE_SHIELD_D2);
   LED_TURN_OFF();
@@ -48,10 +58,13 @@ static char init_light() {
   return 1;
 }
 
+/*
+ * Définit la couleur de la LED ou récupère sa couleur.
+ */
 static char manage_color(struct args_t *args) {
   if (args) {
     setColorRGB(0, args->r, args->g, args->b);
-    server_push(&alertLight);
+    server_push(&alertLight); // on notifie le changement
     out_uint(args->r);
     out_str("-");
     out_uint(args->g);

@@ -8,6 +8,9 @@ $("#luminosity-slider").on("slide", function(slideEvt) {
 	$("#luminosity-value").text(slideEvt.value);
 });
 
+/*
+ * Change l'intensité de la LED.
+ */
 function ajax_intensity () {
   var intensity = $("#intensity-slider").slider("getValue");
 	ajax_light(intensity, intensity, intensity);
