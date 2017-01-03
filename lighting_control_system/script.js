@@ -86,27 +86,6 @@ function ajax_get_light () {
 }
 
 /*
- * Récupère la valeur du capteur de lumière.
- */
-function ajax_get_value_light_sensor() {
-  $.ajax({
-    url: "../light_sensor",
-    dataType: "text",
-    timeout: 10000
-  })
-  .done(function(msg) {
-    var digits = "0".repeat(4 - msg.length).concat(msg);
-    var children = $("#four-digits").children();
-    for(var i = 0; i < 4 /*children.length*/; i++) {
-      children[i].innerHTML = digits[i];
-    }
-  })
-  .fail(function() {
-    $("#error").fadeIn().delay(10000).fadeOut();
-  });
-}
-
-/*
  * Met à jour l'interrupteur, la couleur et l'intensité sur l'interface web
  * lorsqu'il y a un changement d'état.
  */
@@ -124,15 +103,32 @@ function update_interface() {
     change_color(r,g,b);
     change_intensity(r,g,b);
   })
-  .fail(function() {
-    $('#error').fadeIn().delay(10000).fadeOut();
-  })
   .always(function() {
     update_interface();
   });
 }
 
+/*
+ * Met à jour la luminosité lorsqu'il y a un changement d'état.
+ */
+function update_luminosity() {
+  $.ajax({
+    url: "../light_sensor",
+    dataType: "text"
+  })
+  .done(function(msg) {
+    var digits = "0".repeat(4 - msg.length).concat(msg);
+    var children = $("#four-digits").children();
+    for(var i = 0; i < 4 /*children.length*/; i++) {
+      children[i].innerHTML = digits[i];
+    }
+  })
+  .always(function() {
+    update_luminosity();
+  });
+}
+
 $("body").on("change", "#switch-led", ajax_interrupt);
 ajax_get_light();
-setInterval(ajax_get_value_light_sensor, 500);
 update_interface();
+update_luminosity();
