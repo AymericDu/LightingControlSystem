@@ -89,7 +89,7 @@ function ajax_get_light () {
  * Met à jour l'interrupteur, la couleur et l'intensité sur l'interface web
  * lorsqu'il y a un changement d'état.
  */
-function update_interface() {
+function ajax_update_light() {
   $.ajax({
     url: "../comet_light",
     dataType: "text"
@@ -104,14 +104,14 @@ function update_interface() {
     change_intensity(r,g,b);
   })
   .always(function() {
-    update_interface();
+    ajax_update_light();
   });
 }
 
 /*
  * Met à jour la luminosité lorsqu'il y a un changement d'état.
  */
-function update_luminosity() {
+function ajax_update_luminosity() {
   $.ajax({
     url: "../light_sensor",
     dataType: "text"
@@ -124,11 +124,11 @@ function update_luminosity() {
     }
   })
   .always(function() {
-    update_luminosity();
+    ajax_update_luminosity();
   });
 }
 
 $("body").on("change", "#switch-led", ajax_interrupt);
 ajax_get_light();
-update_interface();
-update_luminosity();
+ajax_update_light();
+ajax_update_luminosity();
