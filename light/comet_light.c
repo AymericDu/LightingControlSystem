@@ -1,7 +1,7 @@
 /*
 <generator>
   <handlers doGet="get_color"/>
-	<properties persistence="volatile" interaction="alert" channel="alertLight"/>
+	<properties persistence="volatile" interaction="stream" channel="alertLight"/>
 </generator>
  */
 

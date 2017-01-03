@@ -123,10 +123,12 @@ function update_interface() {
     change_interrupt(r,g,b);
     change_color(r,g,b);
     change_intensity(r,g,b);
-    update_interface();
   })
   .fail(function() {
     $('#error').fadeIn().delay(10000).fadeOut();
+  })
+  .always(function() {
+    update_interface();
   });
 }
 
