@@ -8,9 +8,6 @@
 #include "../lib/P9813.h"
 #include "../lib/connectors.h"
 #include <stdint.h>
-#include "generators.h"
-#include "channels.h"
-
 
 static char get_color(struct args_t *args) {
   uint8_t r, g, b;

@@ -13,7 +13,7 @@
 #include "../lib/P9813.h"
 #include "../lib/connectors.h"
 #include <stdint.h>
-#include "channels.h"
+#include <channels.h>
 
 #define LED_TURN_ON() setColorRGB(0, 255, 255, 255)
 #define LED_TURN_OFF() setColorRGB(0, 0, 0, 0)
