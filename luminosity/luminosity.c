@@ -15,7 +15,7 @@
 
 #define TIMER_LUMINOSITY RFLPC_TIMER3
 #define NB_TESTS_PER_SECOND 10
-#define TOLERANCE_MARGIN 10 // Représente +/- 0,24%
+#define TOLERANCE_MARGIN 20 // Représente +/- 0,49%
 #define MAX_CPT 300
 #define MAX_MATCH_VALUE 4294967295
 
