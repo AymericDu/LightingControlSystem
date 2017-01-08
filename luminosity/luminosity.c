@@ -19,11 +19,15 @@
 #define MAX_CPT 300
 #define MAX_MATCH_VALUE 4294967295
 
+enum state_e {START, STOP, PAUSE};
+
 static uint8_t intensity;
 static int luminosity;
 static unsigned int cpt;
+static enum state_e state;
 
 void start() {
+  state = START;
   cpt = 0;
   rflpc_timer_set_match_value(TIMER_LUMINOSITY, RFLPC_TIMER_MATCH0, 1);
   rflpc_timer_set_counter(TIMER_LUMINOSITY, 0);
@@ -31,13 +35,24 @@ void start() {
 }
 
 void stop() {
+  state = STOP;
   rflpc_timer_set_match_value(TIMER_LUMINOSITY, RFLPC_TIMER_MATCH0, MAX_MATCH_VALUE);
   cpt = MAX_CPT;
   rflpc_timer_reset_irq(TIMER_LUMINOSITY, RFLPC_TIMER_MATCH0);
 }
 
+void pause() {
+  state = PAUSE;
+  cpt = 0;
+  rflpc_timer_set_match_value(TIMER_LUMINOSITY, RFLPC_TIMER_MATCH0, 5 * NB_TESTS_PER_SECOND);
+  rflpc_timer_set_counter(TIMER_LUMINOSITY, 0);
+  rflpc_timer_reset_irq(TIMER_LUMINOSITY, RFLPC_TIMER_MATCH0);
+}
+
 RFLPC_IRQ_HANDLER bring_luminosity_closer() {
   if (rflpc_timer_test_irq(TIMER_LUMINOSITY, RFLPC_TIMER_MATCH0)) {
+    if (state == PAUSE)
+      start();
     if (cpt < MAX_CPT) {
       uint8_t r, g, b;
       int luminosity_current;
@@ -54,21 +69,21 @@ RFLPC_IRQ_HANDLER bring_luminosity_closer() {
       difference = luminosity_current - luminosity;
 
       if (difference > -TOLERANCE_MARGIN && difference < TOLERANCE_MARGIN) {
-        stop();
+        pause();
         server_push(&alertLight); // on notifie le changement
         return;
       }
 
       if (luminosity > luminosity_current) {
         if (intensity == 255) {
-          stop();
+          pause();
           server_push(&alertLight); // on notifie le changement
           return;
         }
         intensity++;
       } else {
         if (intensity == 0) {
-          stop();
+          pause();
           server_push(&alertLight); // on notifie le changement
           return;
         }
